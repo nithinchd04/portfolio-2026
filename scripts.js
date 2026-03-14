@@ -332,3 +332,59 @@ fetchWeather();
     ghChart.style.filter = "invert(1) hue-rotate(180deg)";
   }
 })();
+
+/* ── Custom Cursor Animation ── */
+(function() {
+  const cursorDot = document.getElementById('cursor-dot');
+  const cursorRing = document.getElementById('cursor-ring');
+  
+  if (!cursorDot || !cursorRing) return;
+  
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let ringX = mouseX;
+  let ringY = mouseY;
+  let isMoving = false;
+  
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+    
+    if (!isMoving) {
+      isMoving = true;
+      requestAnimationFrame(renderCursor);
+    }
+  });
+
+  const lerp = (a, b, n) => (1 - n) * a + n * b;
+
+  const renderCursor = () => {
+    ringX = lerp(ringX, mouseX, 0.2);
+    ringY = lerp(ringY, mouseY, 0.2);
+    
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+    
+    if (Math.abs(mouseX - ringX) < 0.1 && Math.abs(mouseY - ringY) < 0.1) {
+      isMoving = false;
+    } else {
+      requestAnimationFrame(renderCursor);
+    }
+  };
+
+  document.addEventListener('mouseover', (e) => {
+    const isInteractive = e.target.closest('a, button, input, textarea, .rfx-wrap, .extras-card, .nav-icon, .theme-toggle, .api-refresh, .rfx-btn');
+    if (isInteractive) {
+      document.body.classList.add('cursor-hover');
+    }
+  });
+  document.addEventListener('mouseout', (e) => {
+    const isInteractive = e.target.closest('a, button, input, textarea, .rfx-wrap, .extras-card, .nav-icon, .theme-toggle, .api-refresh, .rfx-btn');
+    if (isInteractive) {
+      document.body.classList.remove('cursor-hover');
+    }
+  });
+})();
