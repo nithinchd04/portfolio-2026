@@ -337,6 +337,7 @@ fetchWeather();
 (function() {
   const cursorDot = document.getElementById('cursor-dot');
   const cursorRing = document.getElementById('cursor-ring');
+  const bgGlow = document.getElementById('bg-glow');
   
   if (!cursorDot || !cursorRing) return;
   
@@ -346,6 +347,8 @@ fetchWeather();
   let mouseY = window.innerHeight / 2;
   let ringX = mouseX;
   let ringY = mouseY;
+  let glowX = mouseX;
+  let glowY = mouseY;
   let isMoving = false;
   
   window.addEventListener('mousemove', (e) => {
@@ -368,7 +371,13 @@ fetchWeather();
     
     cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
     
-    if (Math.abs(mouseX - ringX) < 0.1 && Math.abs(mouseY - ringY) < 0.1) {
+    if (bgGlow) {
+      glowX = lerp(glowX, mouseX, 0.06); // Smoother, slower lerp for the background glow
+      glowY = lerp(glowY, mouseY, 0.06);
+      bgGlow.style.transform = `translate3d(${glowX}px, ${glowY}px, 0)`;
+    }
+    
+    if (Math.abs(mouseX - ringX) < 0.1 && Math.abs(mouseY - ringY) < 0.1 && Math.abs(mouseX - glowX) < 0.1) {
       isMoving = false;
     } else {
       requestAnimationFrame(renderCursor);
@@ -379,12 +388,14 @@ fetchWeather();
     const isInteractive = e.target.closest('a, button, input, textarea, .rfx-wrap, .extras-card, .nav-icon, .theme-toggle, .api-refresh, .rfx-btn');
     if (isInteractive) {
       document.body.classList.add('cursor-hover');
+      if (bgGlow) bgGlow.style.opacity = '0.5';
     }
   });
   document.addEventListener('mouseout', (e) => {
     const isInteractive = e.target.closest('a, button, input, textarea, .rfx-wrap, .extras-card, .nav-icon, .theme-toggle, .api-refresh, .rfx-btn');
     if (isInteractive) {
       document.body.classList.remove('cursor-hover');
+      if (bgGlow) bgGlow.style.opacity = '1';
     }
   });
 })();

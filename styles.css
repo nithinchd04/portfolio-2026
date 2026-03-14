@@ -220,57 +220,6 @@ a{color:inherit;text-decoration:none}
 
 /* CONTACT */
 .contact-sec{text-align:center}
-.contact-sec .section-desc{margin-left:auto;margin-right:auto}
-.contact-email{font-size:clamp(24px,4vw,44px);font-weight:600;letter-spacing:-1.5px;color:var(--blue);display:inline-block;margin-bottom:48px;transition:opacity .3s}
-.contact-email:hover{opacity:.7}
-.contact-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
-.cl-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border:.5px solid var(--g2);border-radius:980px;font-size:14px;color:var(--g1);transition:all .3s}
-.cl-btn:hover{border-color:var(--black);color:var(--black)}
-.cl-btn-hl{border-color:var(--blue);color:var(--blue)}
-.cform{max-width:480px;margin:0 auto 48px;text-align:left}
-.cform-group{margin-bottom:20px}
-.cform-label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--g1);margin-bottom:8px}
-.cform-input,.cform-textarea{width:100%;padding:14px 18px;background:var(--g3);border:1px solid transparent;border-radius:12px;font-family:var(--font);font-size:15px;color:var(--black);outline:none;transition:border-color .3s,background .3s}
-.cform-input:focus,.cform-textarea:focus{border-color:var(--blue);background:#fff}
-.cform-input::placeholder,.cform-textarea::placeholder{color:var(--g2)}
-.cform-textarea{resize:vertical;min-height:120px;line-height:1.6}
-.cform-btn{width:100%;padding:16px;background:var(--blue);color:#fff;border:none;border-radius:980px;font-family:var(--font);font-size:16px;font-weight:500;cursor:pointer;transition:background .3s,transform .2s}
-.cform-btn:hover{background:var(--blue-h)}
-.cform-btn:active{transform:scale(.98)}
-.cform-btn:disabled{opacity:.6;cursor:not-allowed}
-.form-note{font-size:13px;text-align:center;margin-top:12px;min-height:20px}
-.form-div{display:flex;align-items:center;gap:16px;margin:40px auto;max-width:480px}
-.form-div::before,.form-div::after{content:'';flex:1;height:.5px;background:var(--g2)}
-.form-div span{font-size:12px;color:var(--g2)}
-
-/* EXTRAS */
-.bg-blobs{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;overflow:hidden;pointer-events:none}
-.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.4}
-.blob-1{top:-10%;left:-10%;width:50vw;height:50vw;background:rgba(0,113,227,0.15);animation:blobA 20s infinite alternate}
-.blob-2{bottom:-20%;right:-10%;width:60vw;height:60vw;background:rgba(52,199,89,0.1);animation:blobB 25s infinite alternate}
-@keyframes blobA{0%{transform:translate(0,0) scale(1)}100%{transform:translate(10vw,15vh) scale(1.2)}}
-@keyframes blobB{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-15vw,-10vh) scale(1.1)}}
-
-.extras-sec{padding:120px 22px;max-width:980px;margin:0 auto}
-.extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.extras-card{background:var(--g3);border-radius:20px;padding:32px;transition:transform .4s cubic-bezier(.175,.885,.32,1)}
-.extras-title{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--black);display:flex;align-items:center;gap:10px}
-.extras-link{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.06em}
-.extras-link:hover{text-decoration:underline}
-
-/* GitHub */
-.gh-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-.gh-stat{text-align:center}
-.gh-stat-num{font-size:32px;font-weight:700;letter-spacing:-1px;line-height:1;color:var(--black)}
-.gh-stat-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--g1);margin-top:4px;font-weight:500}
-[data-theme="dark"] .gh-stat-label{color:rgba(255,255,255,.5)}
-.gh-chart{width:100%;border-radius:4px;margin-bottom:20px}
-.gh-repos{display:flex;flex-direction:column;gap:8px}
-.gh-repo{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--white);border-radius:10px;font-size:13px;border:.5px solid var(--g2)}
-[data-theme="dark"] .gh-repo{background:var(--black);border-color:rgba(255,255,255,.1)}
-.gh-repo-name{color:var(--blue);font-weight:500}
-.gh-repo-meta{font-family:var(--mono);font-size:11px;color:var(--g1);display:flex;gap:12px}
-
 /* Currently Learning */
 .learn-list{display:flex;flex-direction:column;gap:20px}
 .learn-item{display:flex;gap:14px;align-items:flex-start}
