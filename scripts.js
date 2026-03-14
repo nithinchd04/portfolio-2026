@@ -224,3 +224,111 @@ document.querySelectorAll('.learn-list').forEach(el => barObs.observe(el));
   window.rfxReset=rfxReset;
 })();
 
+/* ── 3D Tilt Effect on Cards ── */
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -4;
+    const rotateY = ((x - centerX) / centerX) * 4;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  });
+});
+
+/* ── API: Random Tech Quote (DummyJSON) ── */
+async function fetchQuote() {
+  const qText = document.getElementById('api-quote');
+  const qAuthor = document.getElementById('api-author');
+  if(!qText) return;
+  qText.style.opacity = '0.5';
+  try {
+    const res = await fetch('https://dummyjson.com/quotes/random');
+    if (!res.ok) throw new Error('API Error');
+    const data = await res.json();
+    qText.textContent = `"${data.quote}"`;
+    qAuthor.textContent = `— ${data.author}`;
+  } catch (err) {
+    qText.textContent = '"The best error message is the one that never shows up."';
+    qAuthor.textContent = "— Thomas Fuchs";
+  }
+  qText.style.opacity = '1';
+}
+fetchQuote();
+
+/* ── API: Live Weather (Open-Meteo for Riga) ── */
+async function fetchWeather() {
+  const wTemp = document.getElementById('w-temp');
+  if(!wTemp) return;
+  try {
+    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=56.946&longitude=24.1059&current_weather=true');
+    if(!res.ok) throw new Error('API Error');
+    const data = await res.json();
+    const temp = Math.round(data.current_weather.temperature);
+    wTemp.textContent = `${temp}°C`;
+  } catch (err) {
+    wTemp.textContent = '--°C';
+  }
+}
+fetchWeather();
+
+/* ── Tech Radar Rotation ── */
+(function(){
+  let currentRadar = 1;
+  const totalRadar = 3;
+  setInterval(() => {
+    const active = document.querySelector('.radar-item.active');
+    if (active) active.classList.remove('active');
+    
+    currentRadar = currentRadar >= totalRadar ? 1 : currentRadar + 1;
+    const next = document.getElementById(`radar-${currentRadar}`);
+    if (next) next.classList.add('active');
+  }, 4000);
+})();
+
+/* ── Dark Mode Toggle ── */
+(function(){
+  const btn = document.getElementById('theme-btn');
+  if(!btn) return;
+  
+  // Check local storage or system preference
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  if(savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+  
+  btn.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Update GitHub Chart dynamically
+    const ghChart = document.querySelector('.gh-chart');
+    if (ghChart) {
+      if (newTheme === 'dark') {
+        ghChart.src = "https://ghchart.rshah.org/nithinchd04"; // Default colors for dark mode context
+        ghChart.style.filter = "invert(1) hue-rotate(180deg)"; // Invert to mimic a dark mode version of default styling
+      } else {
+        ghChart.src = "https://ghchart.rshah.org/1d1d1f/nithinchd04";
+        ghChart.style.filter = "none";
+      }
+    }
+  });
+
+  // Apply initial GitHub Chart theme
+  const ghChart = document.querySelector('.gh-chart');
+  if (ghChart && (savedTheme === 'dark' || (!savedTheme && prefersDark))) {
+    ghChart.src = "https://ghchart.rshah.org/nithinchd04";
+    ghChart.style.filter = "invert(1) hue-rotate(180deg)";
+  }
+})();
